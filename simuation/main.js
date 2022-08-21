@@ -61,8 +61,7 @@ const config = {
   ]
 };
 
-
-window.addEventListener("load", () => {
+function main() {
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -86,4 +85,6 @@ window.addEventListener("load", () => {
   window.addEventListener("resize", () => {
     updateDimensions();
   });
-});
+}
+
+window.addEventListener("load", main);

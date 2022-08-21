@@ -13,27 +13,16 @@ class Monster {
     const maxWidth = window.innerWidth;
     const maxHeight = window.innerHeight;
 
-    for (
-      let degreeStep = config.rotationStepDegrees;
-      degreeStep <= 180;
-      degreeStep++
-    ) {
+    for (let degreeStep = config.rotationStepDegrees; degreeStep <= 180; degreeStep++) {
       const direction =
         this.direction +
         ((Math.PI * 2) / 360) * degreeStep * (0.5 - Math.random());
 
       const loc = {
-        x: Math.max(
-          0,
-          Math.min(maxWidth, this.loc.x + Math.cos(direction) * config.stepSize)
-        ),
-        y: Math.max(
-          0,
-          Math.min(
-            maxHeight,
-            this.loc.y + Math.sin(direction) * config.stepSize
-          )
-        )
+        x: Math.max(0, Math.min(maxWidth, 
+                                this.loc.x + Math.cos(direction) * config.stepSize)),
+        y: Math.max(0, Math.min(maxHeight,
+                                this.loc.y + Math.sin(direction) * config.stepSize))
       };
 
       if (loc.x <= 0 || loc.x >= maxWidth || loc.y <= 0 || loc.y >= maxHeight) {
@@ -73,7 +62,7 @@ class MonsterSet {
   }
   
   step() {
-      this.monsters.forEach((m) => m.step());
+    this.monsters.forEach((m) => m.step());
   }
 }
 
