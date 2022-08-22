@@ -7,13 +7,17 @@ class Monster {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
     };
-    this.maxSize = config.initialSize.random_norm();
-    this.size = 5; //this.maxSize * Math.random();
-    this.speed = config.speed.random();
+    this.maxSize = config.initialMaxSize.random_norm();
+    this.size = 5 * Math.random();
+    this.speedFactor = config.speedFactor.random();
     this.breedInterval = config.breedInterval.random_norm();
     this.resetBreedTime();
     this.initialTurnMax = config.maxTurnDegrees.random_norm();
-    this.regenerationInterval = 500; //config.regeneration.random();
+    this.regenerationInterval = config.regenerationInterval.random();
+  }
+
+  get speed() {
+    return this.speedFactor / Math.pow(this.size, 0.5);
   }
 
   kineticEnergy() {

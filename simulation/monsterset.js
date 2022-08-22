@@ -8,8 +8,8 @@ class Team {
 class MonsterSet {
   constructor(ctx) {
     this.teams = [];
-    for (let i = 0; i < config.teamCount; i++) {
-      const team = new Team(config.colors[i]);
+    for (const color of config.colors) {
+      const team = new Team(color);
       team.monsters.push(new Monster(ctx, team));
       this.teams.push(team);
     }    
