@@ -41,7 +41,7 @@ class MonsterSet {
 
       for (let j = i + 1; j < this.monsters.length; j++) {
         const m2 = this.monsters[j];
-        if (dead.has(m2)) {
+        if (m1.color == m2.color || dead.has(m2)) {
           continue;
         }        
 

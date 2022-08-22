@@ -3,7 +3,7 @@ class Monster {
     this.ctx = ctx;
     this.color = color;
     this.direction = Math.PI * 2 * (0.5 - Math.random());
-    this.loc = loc || {
+    this.loc = {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
     };
@@ -12,7 +12,10 @@ class Monster {
   }
 
   breed() {
-    return new Monster(this.ctx, this.color, this.loc);
+    const child = new Monster(this.ctx, this.color, this.loc);
+    child.loc = {...this.loc};
+    child.size = config.initialSize;
+    return child;
   }
 
   breedTime() {

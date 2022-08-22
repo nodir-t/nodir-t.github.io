@@ -8,7 +8,7 @@ const config = {
   monsterCount: 5,
   interval: 10,
   rotationStepDegrees: 20,
-  breedInterval: 10000,
+  breedInterval: 2000,
 
   colors: [
     "#FF6633",
