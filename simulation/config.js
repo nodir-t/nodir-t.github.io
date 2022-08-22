@@ -1,12 +1,14 @@
 const config = {
-  stepSize: 2,
-  radius: 20,
+  stepSize: 3,
+  initialSize: 20,
+  growthFactor: 0.25,
   circleColor: "white",
   centerRadius: 2,
   centerColor: "red",
   monsterCount: 5,
-  interval: 2,
+  interval: 10,
   rotationStepDegrees: 20,
+  breedInterval: 10000,
 
   colors: [
     "#FF6633",

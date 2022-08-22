@@ -1,13 +1,26 @@
 class Monster {
-  constructor(ctx, color) {
+  constructor(ctx, color, loc) {
     this.ctx = ctx;
     this.color = color;
     this.direction = Math.PI * 2 * (0.5 - Math.random());
-    this.loc = {
+    this.loc = loc || {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
     };
-    this.level = 1;
+    this.size = config.initialSize;
+    this.resetBreedTime();
+  }
+
+  breed() {
+    return new Monster(this.ctx, this.color, this.loc);
+  }
+
+  breedTime() {
+    return this.nextBreed < Date.now();
+  }
+
+  resetBreedTime() {
+    this.nextBreed = Date.now() + config.breedInterval * (1 + Math.random());
   }
 
   move() {
@@ -44,12 +57,12 @@ class Monster {
   }
 
   drawMonster() {
-    this.fillCircle(config.radius, this.color);
+    this.fillCircle(this.size, this.color);
     this.fillCircle(config.centerRadius, config.centerColor);
 
     this.ctx.beginPath();
     this.ctx.strokeStyle = "grey";
-    this.ctx.arc(this.loc.x, this.loc.y, config.radius, 0, 2 * Math.PI);
+    this.ctx.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI);
     this.ctx.stroke();    
   }
 

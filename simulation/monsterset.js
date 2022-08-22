@@ -15,7 +15,17 @@ class MonsterSet {
   
   step() {
     this.monsters.forEach((m) => m.step());
+    this.breed();
     this.kill();
+  }
+
+  breed() {
+    this.monsters.forEach(m => {
+      if (m.breedTime()) {
+        this.monsters.push(m.breed());
+        m.resetBreedTime();
+      }
+    });
   }
 
   kill() {
@@ -35,13 +45,16 @@ class MonsterSet {
           continue;
         }        
 
-        if (distance(m1.loc, m2.loc) > config.radius) {
+        if (distance(m1.loc, m2.loc) > Math.max(m1.size, m2.size)) {
+          // Too far from each other.
           continue;
         }
 
-        const killFirst = m1.level / (m1.level + m2.level) < Math.random();
-        dead.add(killFirst ? m1 : m2);
-        (killFirst ? m2 : m1).level++;
+        let killFirst = m1.size / (m1.size + m2.size) < Math.random();
+        const lost = killFirst ? m1 : m2;
+        const won = killFirst ? m2 : m1;
+        dead.add(lost);
+        won.size += lost.size * config.growthFactor;
         if (killFirst) {
           break;
         }
