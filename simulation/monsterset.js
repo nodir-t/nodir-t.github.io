@@ -20,9 +20,15 @@ class MonsterSet {
   }
 
   breed() {
+    const counts = {};
     this.monsters.forEach(m => {
-      if (m.breedTime() && this.monsters.length < config.maxMonsters) {
+      counts[m.color] = (counts[m.color] || 0) + 1;
+    });
+
+    this.monsters.forEach(m => {
+      if (m.breedTime() && counts[m.color] < config.maxMonstersPerTeam) {
         this.monsters.push(m.breed());
+        counts[m.color]++;
         m.resetBreedTime();
       }
     });

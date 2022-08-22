@@ -13,6 +13,7 @@ class Monster {
 
   breed() {
     const child = new Monster(this.ctx, this.color, this.loc);
+    this.direction = this.direction;
     child.loc = {...this.loc};
     child.size = config.initialSize;
     return child;
