@@ -19,12 +19,12 @@ const config = {
   maxMonstersPerTeam: 50,
 
   initialMaxSize: new Interval(20, 100),
-  speedFactor: new Interval(5, 10),
+  speedFactor: new Interval(1, 10),
   circleColor: "white",
   centerRadius: 2,
   centerColor: "red",
   interval: 10,
-  maxTurnDegrees: new Interval(5, 30),
+  maxTurnDegrees: new Interval(2, 20),
   breedInterval: new Interval(0, 5000),
   regenerationInterval: new Interval(200, 1000),
 
