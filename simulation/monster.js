@@ -1,22 +1,23 @@
 class Monster {
-  constructor(ctx, color, loc) {
+  constructor(ctx, team) {
     this.ctx = ctx;
-    this.color = color;
+    this.team = team;
     this.direction = Math.PI * 2 * (0.5 - Math.random());
     this.loc = {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
     };
-    this.size = random(config.initialSize);
-    this.speed = random(config.speed)
+    this.size = config.initialSize.random();
+    this.speed = config.speed.random();
     this.resetBreedTime();
+    this.initialTurnMax = config.maxTurnDegrees.random();
   }
 
   breed() {
-    const child = new Monster(this.ctx, this.color, this.loc);
-    this.direction = this.direction;
+    const child = new Monster(this.ctx, this.team);
+    child.direction = this.direction;
     child.loc = {...this.loc};
-    child.size = config.initialSize;
+    child.size = config.initialSize.random();
     return child;
   }
 
@@ -25,15 +26,15 @@ class Monster {
   }
 
   resetBreedTime() {
-    this.nextBreed = Date.now() + random(config.breedInterval);
+    this.nextBreed = Date.now() + config.breedInterval.random();
   }
 
   move() {
     const maxWidth = window.innerWidth;
     const maxHeight = window.innerHeight;
 
-    for (let degreeStep = random(config.rotationStepDegrees); degreeStep <= 180; degreeStep++) {
-      const direction = this.direction + ((Math.PI * 2) / 360) * degreeStep * (0.5 - Math.random());
+    for (let maxTurn = this.initialTurnMax; maxTurn <= 180; maxTurn++) {
+      const direction = this.direction + Math.PI * 2 / 360 * maxTurn * (0.5 - Math.random());
 
       const loc = {
         x: Math.max(0, Math.min(maxWidth, 
@@ -60,7 +61,7 @@ class Monster {
   }
 
   drawMonster() {
-    this.fillCircle(this.size, this.color);
+    this.fillCircle(this.size, this.team.color);
     this.fillCircle(config.centerRadius, config.centerColor);
 
     this.ctx.beginPath();

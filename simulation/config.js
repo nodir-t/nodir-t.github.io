@@ -1,15 +1,27 @@
+class NormDist {
+  constructor(min, max) {
+    this.min = min;
+    this.max = max;
+  }
+
+  random() {
+    return this.min + (this.max - this.min) * randn_bm();
+  }
+}
+
 const config = {
-  initialSize: [20, 30],
-  speed: [3, 5],
-  growthFactor: 0.5,
+  teamCount: 5,
+  maxMonstersPerTeam: 50,
+
+  initialSize: new NormDist(20, 30),
+  speed: new NormDist(3, 5),
   circleColor: "white",
   centerRadius: 2,
   centerColor: "red",
-  monsterCount: 5,
   interval: 10,
-  rotationStepDegrees: [20, 60],
-  breedInterval: [2000, 5000],
-  maxMonstersPerTeam: 50,
+  maxTurnDegrees: new NormDist(10, 50),
+  breedInterval: new NormDist(2000, 5000),
+
 
   colors: [
     "#FF6633",
