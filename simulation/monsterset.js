@@ -15,8 +15,8 @@ class MonsterSet {
   
   step() {
     this.monsters.forEach((m) => m.step());
-    this.breed();
     this.kill();
+    this.breed();
   }
 
   breed() {
@@ -56,12 +56,12 @@ class MonsterSet {
           continue;
         }
 
-        let killFirst = m1.size / (m1.size + m2.size) < Math.random();
-        const lost = killFirst ? m1 : m2;
-        const won = killFirst ? m2 : m1;
+        let firstWins = m1.size / (m1.size + m2.size) > Math.random();
+        const won = firstWins ? m1 : m2;
+        const lost = !firstWins ? m2 : m1;
         dead.add(lost);
         won.size += lost.size * config.growthFactor;
-        if (killFirst) {
+        if (!firstWins) {
           break;
         }
       }

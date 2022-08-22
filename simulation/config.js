@@ -8,7 +8,7 @@ const config = {
   monsterCount: 5,
   interval: 10,
   rotationStepDegrees: 20,
-  breedInterval: 5000,
+  breedInterval: 2000,
   maxMonstersPerTeam: 30,
 
   colors: [
