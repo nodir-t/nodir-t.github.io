@@ -17,7 +17,7 @@ class Monster {
   }
 
   get speed() {
-    return this.speedFactor / Math.pow(this.size, 0.5);
+    return this.speedFactor / Math.pow(this.size, 0.2);
   }
 
   kineticEnergy() {

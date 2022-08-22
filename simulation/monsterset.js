@@ -59,7 +59,7 @@ class MonsterSet {
               continue;
             }
     
-            if (distance(m1.loc, m2.loc) > Math.max(m1.size, m2.size)) {
+            if (distance(m1.loc, m2.loc) > m1.size + m2.size) {
               // Too far from each other.
               continue;
             }
