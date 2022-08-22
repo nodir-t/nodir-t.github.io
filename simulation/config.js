@@ -9,6 +9,7 @@ const config = {
   interval: 10,
   rotationStepDegrees: 20,
   breedInterval: 2000,
+  maxMonsters: 100,
 
   colors: [
     "#FF6633",

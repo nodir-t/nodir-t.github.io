@@ -21,7 +21,7 @@ class MonsterSet {
 
   breed() {
     this.monsters.forEach(m => {
-      if (m.breedTime()) {
+      if (m.breedTime() && this.monsters.length < config.maxMonsters) {
         this.monsters.push(m.breed());
         m.resetBreedTime();
       }
