@@ -17,9 +17,9 @@ class MonsterSet {
   
   step() {
     this.teams.forEach(t => t.monsters.forEach(m => m.step()));
-
     this.kill();
     this.breed();
+    this.teams.forEach(t => t.monsters.forEach(m => m.heal()));
   }
 
   breed() {
@@ -64,12 +64,33 @@ class MonsterSet {
               continue;
             }
     
-            let firstWins = m1.kineticEnergy() / (m1.kineticEnergy() + m2.kineticEnergy()) > Math.random();
-            const won = firstWins ? m1 : m2;
-            const lost = firstWins ? m2 : m1;
+            // Who hits first?
+            const [hitsFirst, hitsSecond] = m1.speed / (m1.speed + m2.speed) > Math.random()
+              ? [m1, m2] : [m2, m1];
+            let lost;
+            let won;
+            // Fight until death.
+            while (true) {
+              // First one hits.
+              hitsSecond.size -= hitsFirst.damage();
+              if (hitsSecond.size <= 0) {
+                won = hitsFirst;
+                lost = hitsSecond;
+                break;
+              }
+
+              // Second one hits.
+              hitsFirst.size -= hitsSecond.damage();
+              if (hitsFirst.size <= 0) {
+                won = hitsSecond;
+                lost = hitsFirst;
+                break;
+              }
+            }
+ 
             dead.add(lost);
-            won.size += lost.size * 0.25;
-            if (!firstWins) {
+            won.maxSize += lost.maxSize / 5;
+            if (lost == m1) {
               break;
             }
           }

@@ -27,6 +27,7 @@ const config = {
   interval: 10,
   maxTurnDegrees: new Interval(10, 50),
   breedInterval: new Interval(0, 5000),
+  regeneration: new Interval(0.01, 0.1),
 
   colors: [
     "#FF6633",

@@ -7,15 +7,21 @@ class Monster {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
     };
-    this.size = config.initialSize.random_norm();
+    this.maxSize = config.initialSize.random_norm();
+    this.size = 5; //this.maxSize * Math.random();
     this.speed = config.speed.random();
     this.breedInterval = config.breedInterval.random_norm();
     this.resetBreedTime();
     this.initialTurnMax = config.maxTurnDegrees.random_norm();
+    this.regenerationInterval = 500; //config.regeneration.random();
   }
 
   kineticEnergy() {
     return this.size * this.speed * this.speed / 2;
+  }
+
+  damage() {
+    return new Interval(0, this.size).random();
   }
 
   breed() {
@@ -38,7 +44,7 @@ class Monster {
     const maxHeight = window.innerHeight;
 
     for (let maxTurn = this.initialTurnMax; maxTurn <= 180; maxTurn++) {
-      const direction = this.direction + Math.PI * 2 / 360 * maxTurn * (0.5 - Math.random());
+      const direction = this.direction + Math.PI * 2 / 360 * maxTurn * (1 - 2 * Math.random());
 
       const loc = {
         x: Math.max(0, Math.min(maxWidth, 
@@ -77,5 +83,16 @@ class Monster {
   step() {
     this.move();
     this.drawMonster();
+  }
+  
+  heal() {
+    if (!this.healTime) {
+      this.healTime = Date.now();
+    }
+
+    if (Date.now() - this.healTime > this.regenerationInterval) {
+      this.size = Math.min(this.maxSize, this.size + 1);
+      this.healTime = Date.now();
+    }
   }
 }
