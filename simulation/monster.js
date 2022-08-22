@@ -7,17 +7,21 @@ class Monster {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
     };
-    this.size = config.initialSize.random();
+    this.size = config.initialSize.random_norm();
     this.speed = config.speed.random();
+    this.breedInterval = config.breedInterval.random_norm();
     this.resetBreedTime();
-    this.initialTurnMax = config.maxTurnDegrees.random();
+    this.initialTurnMax = config.maxTurnDegrees.random_norm();
+  }
+
+  kineticEnergy() {
+    return this.size * this.speed * this.speed / 2;
   }
 
   breed() {
     const child = new Monster(this.ctx, this.team);
     child.direction = this.direction;
     child.loc = {...this.loc};
-    child.size = config.initialSize.random();
     return child;
   }
 
@@ -26,7 +30,7 @@ class Monster {
   }
 
   resetBreedTime() {
-    this.nextBreed = Date.now() + config.breedInterval.random();
+    this.nextBreed = Date.now() + this.breedInterval * zeroToTwo.random_norm();
   }
 
   move() {

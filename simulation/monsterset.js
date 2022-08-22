@@ -64,7 +64,7 @@ class MonsterSet {
               continue;
             }
     
-            let firstWins = m1.size / (m1.size + m2.size) > Math.random();
+            let firstWins = m1.kineticEnergy() / (m1.kineticEnergy() + m2.kineticEnergy()) > Math.random();
             const won = firstWins ? m1 : m2;
             const lost = firstWins ? m2 : m1;
             dead.add(lost);
