@@ -7,6 +7,7 @@ class Monster {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
     };
+    this.level = 1;
   }
 
   move() {
@@ -45,6 +46,11 @@ class Monster {
   drawMonster() {
     this.fillCircle(config.radius, this.color);
     this.fillCircle(config.centerRadius, config.centerColor);
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "grey";
+    this.ctx.arc(this.loc.x, this.loc.y, config.radius, 0, 2 * Math.PI);
+    this.ctx.stroke();    
   }
 
   step() {
@@ -52,17 +58,3 @@ class Monster {
     this.drawMonster();
   }
 }
-
-class MonsterSet {
-  constructor(ctx) {
-    this.monsters = [];
-    for (let i = 0; i < config.monsterCount; i++) {
-      this.monsters.push(new Monster(ctx, config.colors[i]));
-    }    
-  }
-  
-  step() {
-    this.monsters.forEach((m) => m.step());
-  }
-}
-
