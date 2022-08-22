@@ -25,3 +25,14 @@ function main() {
 }
 
 window.addEventListener("load", main);
+
+function random(min, max) {
+  const range = (min instanceof Array) ? min : [min, max];
+  return range[0] + (range[1] - range[0]) * Math.random();
+}
+
+function distance(a, b) {
+  return Math.sqrt(
+    Math.pow(Math.abs(a.x - b.x), 2) +
+    Math.pow(Math.abs(a.y - b.y), 2));
+}

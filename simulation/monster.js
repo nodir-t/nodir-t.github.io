@@ -7,7 +7,8 @@ class Monster {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
     };
-    this.size = config.initialSize;
+    this.size = random(config.initialSize);
+    this.speed = random(config.speed)
     this.resetBreedTime();
   }
 
@@ -24,23 +25,21 @@ class Monster {
   }
 
   resetBreedTime() {
-    this.nextBreed = Date.now() + config.breedInterval * (1 + Math.random());
+    this.nextBreed = Date.now() + random(config.breedInterval);
   }
 
   move() {
     const maxWidth = window.innerWidth;
     const maxHeight = window.innerHeight;
 
-    for (let degreeStep = config.rotationStepDegrees; degreeStep <= 180; degreeStep++) {
-      const direction =
-        this.direction +
-        ((Math.PI * 2) / 360) * degreeStep * (0.5 - Math.random());
+    for (let degreeStep = random(config.rotationStepDegrees); degreeStep <= 180; degreeStep++) {
+      const direction = this.direction + ((Math.PI * 2) / 360) * degreeStep * (0.5 - Math.random());
 
       const loc = {
         x: Math.max(0, Math.min(maxWidth, 
-                                this.loc.x + Math.cos(direction) * config.stepSize)),
+                                this.loc.x + Math.cos(direction) * this.speed)),
         y: Math.max(0, Math.min(maxHeight,
-                                this.loc.y + Math.sin(direction) * config.stepSize))
+                                this.loc.y + Math.sin(direction) * this.speed))
       };
 
       if (loc.x <= 0 || loc.x >= maxWidth || loc.y <= 0 || loc.y >= maxHeight) {

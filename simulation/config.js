@@ -1,15 +1,15 @@
 const config = {
-  stepSize: 3,
-  initialSize: 20,
+  initialSize: [20, 30],
+  speed: [3, 5],
   growthFactor: 0.5,
   circleColor: "white",
   centerRadius: 2,
   centerColor: "red",
   monsterCount: 5,
   interval: 10,
-  rotationStepDegrees: 20,
-  breedInterval: 2000,
-  maxMonstersPerTeam: 30,
+  rotationStepDegrees: [20, 60],
+  breedInterval: [2000, 5000],
+  maxMonstersPerTeam: 50,
 
   colors: [
     "#FF6633",
