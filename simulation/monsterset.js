@@ -54,6 +54,12 @@ class MonsterSet {
       if (dead.has(m1)) {
         return;
       }
+      m1.ttl--;
+      if (m1.ttl <= 0) {
+        dead.add(m1);
+        return;
+      }
+
       for (const m2 of grid.reachable(m1)) {
         if (dead.has(m2) || m1.team == m2.team || distance(m1.loc, m2.loc) > m1.size + m2.size) {
           // M2 is dead, or on the same team, or too far from m1.

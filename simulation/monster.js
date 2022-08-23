@@ -19,6 +19,8 @@ class Monster {
     }
 
     this.resetBreedTime();
+
+    this.ttl = config.ttl();
   }
 
   get speed() {

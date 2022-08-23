@@ -28,6 +28,7 @@ const config = {
   ferility: (size) => Math.pow(size, 0.5) / 200,
   regeneration: 0.1,
   initialTurnMax: 7,
+  ttl: () => 1000 * zeroToTwo.random_norm(),
 
   colors: [
     "red",
