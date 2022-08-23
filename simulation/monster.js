@@ -25,24 +25,22 @@ class Monster {
     return this.dna.speed * config.speed(this.size);
   }
 
-  get fertility() {
-    return this.dna.fertility * config.ferility(this.size);
-  }
-
   damage() {
     return new Interval(0, this.size).random();
   }
 
-  breed() {
+  tryBreed() {
+    if (this.untilBreed > 0) {
+      this.untilBreed--;
+      return null;
+    }
+
+    this.resetBreedTime();
     return new Monster(this.ctx, this.team, this.loc, this.direction, this.dna);
   }
 
-  breedTime() {
-    return this.nextBreed < Date.now();
-  }
-
   resetBreedTime() {
-    this.nextBreed = Date.now() + 1000 / this.fertility;Date.now() + 10000;
+    this.untilBreed = 1 / (this.dna.fertility * config.ferility(this.size));
   }
 
   move() {
@@ -97,14 +95,7 @@ class Monster {
     return 1000/this.dna.regeneration;
   }
   
-  heal() {
-    if (!this.healTime) {
-      this.healTime = Date.now();
-    }
-
-    if (Date.now() - this.healTime > config.regenerationInterval / this.dna.regeneration) {
-      this.size = Math.min(this.maxSize, this.size + 1);
-      this.healTime = Date.now();
-    }
+  grow() {
+    this.size = Math.min(this.maxSize, this.size + config.regeneration * this.dna.regeneration);
   }
 }

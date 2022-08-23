@@ -27,7 +27,7 @@ class MonsterSet {
     this.teams.forEach(t => t.monsters.forEach(m => m.step()));
     this.kill();
     this.breed();
-    this.teams.forEach(t => t.monsters.forEach(m => m.heal()));
+    this.teams.forEach(t => t.monsters.forEach(m => m.grow()));
   }
 
   breed() {
@@ -37,12 +37,10 @@ class MonsterSet {
           break;
         }
 
-        if (!m.breedTime()) {
-          continue;
+        const child = m.tryBreed();
+        if (child != null) {
+          t.monsters.push(child);
         }
-
-        m.resetBreedTime();
-        t.monsters.push(m.breed());
       }
     }
   }
