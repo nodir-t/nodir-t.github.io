@@ -67,21 +67,19 @@ class Monster {
     }
   }
 
-  fillCircle(radius, color) {
-    this.ctx.fillStyle = color;
-    this.ctx.beginPath();
-    this.ctx.ellipse(this.loc.x, this.loc.y, radius, radius, 0, 0, Math.PI * 2);
-    this.ctx.fill();
-  }
-
   drawMonster() {
-    this.fillCircle(this.size, this.team.color);
-    this.fillCircle(config.centerRadius, config.centerColor);
-
     this.ctx.beginPath();
-    this.ctx.strokeStyle = "grey";
-    this.ctx.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI);
-    this.ctx.stroke();    
+    this.ctx.fillStyle = this.team.color;
+    this.ctx.ellipse(this.loc.x, this.loc.y, this.size, this.size, 0, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    const healthRadius = this.size - 2;
+    if (healthRadius > 0) {
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = "black";
+      this.ctx.arc(this.loc.x, this.loc.y, healthRadius, 0, 2 * Math.PI);
+      this.ctx.stroke();
+    }
   }
 
   step() {
