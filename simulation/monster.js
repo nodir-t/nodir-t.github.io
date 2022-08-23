@@ -51,7 +51,7 @@ class Monster {
     const maxHeight = window.innerHeight;
 
     let maxTurn = config.initialTurnMax;
-    while (true) {
+    for (let i = 0; i < 1000; i++) {
       const direction = this.direction + Math.PI * 2 / 360 * maxTurn * (1 - 2 * Math.random());
 
       const loc = {
