@@ -48,7 +48,8 @@ class Monster {
     const maxWidth = window.innerWidth;
     const maxHeight = window.innerHeight;
 
-    for (let maxTurn = config.initialTurnMax * this.dna.initialTurnMax; maxTurn <= 180; maxTurn++) {
+    let maxTurn = config.initialTurnMax;
+    while (true) {
       const direction = this.direction + Math.PI * 2 / 360 * maxTurn * (1 - 2 * Math.random());
 
       const loc = {
@@ -59,6 +60,7 @@ class Monster {
       };
 
       if (loc.x <= 0 || loc.x >= maxWidth || loc.y <= 0 || loc.y >= maxHeight) {
+        maxTurn = 180;
         continue;
       }
 

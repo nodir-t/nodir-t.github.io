@@ -46,7 +46,7 @@ class MonsterSet {
   }
 
   kill() {
-    const grid = new MonsterGrid(100);
+    const grid = new MonsterGrid(10);
     this.teams.forEach(t => t.monsters.forEach(m => grid.add(m)));
 
     const dead = new Set();
