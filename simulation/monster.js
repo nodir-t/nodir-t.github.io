@@ -1,27 +1,32 @@
 class Monster {
-  constructor(ctx, team) {
+  constructor(ctx, team, loc, direction, dna) {
     this.ctx = ctx;
     this.team = team;
-    this.direction = Math.PI * 2 * (0.5 - Math.random());
-    this.loc = {
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-    };
+    this.direction = direction;
+    this.loc = {...loc};
     this.maxSize = config.initialMaxSize();
     this.size = 5 * Math.random();
-    this.speedFactor = zeroToTwo.random_norm();
-    this.initialTurnMax = config.maxTurnDegrees();
-    this.regenerationInterval = config.regenerationInterval();
-    this.fertilityFactor = zeroToTwo.random_norm();
+
+    this.dna = {
+      speed: zeroToTwo.random_norm(),
+      initialTurnMax: zeroToTwo.random_norm(),
+      regeneration: zeroToTwo.random_norm(),
+      fertility: zeroToTwo.random_norm(),
+    };
+    // Inherit DNA.
+    for (let p in dna || {}) {
+      this.dna[p] *= dna[p] || 1;
+    }
+
     this.resetBreedTime();
   }
 
   get speed() {
-    return this.speedFactor * config.speed(this.size);
+    return this.dna.speed * config.speed(this.size);
   }
 
   get fertility() {
-    return this.fertilityFactor * config.ferility(this.size);
+    return this.dna.fertility * config.ferility(this.size);
   }
 
   damage() {
@@ -29,10 +34,7 @@ class Monster {
   }
 
   breed() {
-    const child = new Monster(this.ctx, this.team);
-    child.direction = this.direction;
-    child.loc = {...this.loc};
-    return child;
+    return new Monster(this.ctx, this.team, this.loc, this.direction, this.dna);
   }
 
   breedTime() {
@@ -47,7 +49,7 @@ class Monster {
     const maxWidth = window.innerWidth;
     const maxHeight = window.innerHeight;
 
-    for (let maxTurn = this.initialTurnMax; maxTurn <= 180; maxTurn++) {
+    for (let maxTurn = config.initialTurnMax * this.dna.initialTurnMax; maxTurn <= 180; maxTurn++) {
       const direction = this.direction + Math.PI * 2 / 360 * maxTurn * (1 - 2 * Math.random());
 
       const loc = {
@@ -90,13 +92,17 @@ class Monster {
     this.drawBody();
     this.drawHealth();
   }
+
+  get regenerationInterval() {
+    return 1000/this.dna.regeneration;
+  }
   
   heal() {
     if (!this.healTime) {
       this.healTime = Date.now();
     }
 
-    if (Date.now() - this.healTime > this.regenerationInterval) {
+    if (Date.now() - this.healTime > config.regenerationInterval / this.dna.regeneration) {
       this.size = Math.min(this.maxSize, this.size + 1);
       this.healTime = Date.now();
     }

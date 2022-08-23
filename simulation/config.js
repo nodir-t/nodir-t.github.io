@@ -25,8 +25,9 @@ const config = {
   centerColor: "red",
   interval: 10,
   maxTurnDegrees: () => new Interval(2, 20).random_norm(),
-  regenerationInterval: () => new Interval(200, 1000).random_norm(),
   ferility: (size) => Math.pow(size/10, 0.5),
+  regenerationInterval: 1000,
+  initialTurnMax: 7,
 
   colors: [
     "red",

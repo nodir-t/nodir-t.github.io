@@ -10,7 +10,15 @@ class MonsterSet {
     this.teams = [];
     for (const color of config.colors) {
       const team = new Team(color);
-      team.monsters.push(new Monster(ctx, team));
+      team.monsters.push(new Monster(
+        ctx, 
+        team,
+        {
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+        },
+        Math.PI * 2 * (0.5 - Math.random())
+      ));
       this.teams.push(team);
     }    
   }
