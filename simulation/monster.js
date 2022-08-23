@@ -26,7 +26,8 @@ class Monster {
   }
 
   damage() {
-    return new Interval(0, this.size).random();
+    // Kinetic energy.
+    return Math.random() * this.size * this.speed * this.speed / 2;
   }
 
   tryBreed() {
