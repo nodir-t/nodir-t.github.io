@@ -9,19 +9,19 @@ class Monster {
     };
     this.maxSize = config.initialMaxSize();
     this.size = 5 * Math.random();
-    this.speedFactor = config.speedFactor();
-    this.breedInterval = config.breedInterval();
-    this.resetBreedTime();
+    this.speedFactor = zeroToTwo.random_norm();
     this.initialTurnMax = config.maxTurnDegrees();
     this.regenerationInterval = config.regenerationInterval();
+    this.fertilityFactor = zeroToTwo.random_norm();
+    this.resetBreedTime();
   }
 
   get speed() {
-    return config.speed(this.speedFactor, this.size);
+    return this.speedFactor * config.speed(this.size);
   }
 
-  kineticEnergy() {
-    return this.size * this.speed * this.speed / 2;
+  get fertility() {
+    return this.fertilityFactor * config.ferility(this.size);
   }
 
   damage() {
@@ -40,7 +40,7 @@ class Monster {
   }
 
   resetBreedTime() {
-    this.nextBreed = Date.now() + this.breedInterval * zeroToTwo.random_norm();
+    this.nextBreed = Date.now() + 1000 / this.fertility;Date.now() + 10000;
   }
 
   move() {
@@ -67,13 +67,15 @@ class Monster {
     }
   }
 
-  drawMonster() {
+  drawBody() {
     this.ctx.beginPath();
     this.ctx.fillStyle = this.team.color;
     this.ctx.ellipse(this.loc.x, this.loc.y, this.size, this.size, 0, 0, Math.PI * 2);
     this.ctx.fill();
+  }
 
-    const healthRadius = this.size - 2;
+  drawHealth() {
+    const healthRadius = Math.min(this.size - 2, this.size * .9);
     if (healthRadius > 0) {
       this.ctx.beginPath();
       this.ctx.strokeStyle = "black";
@@ -83,8 +85,10 @@ class Monster {
   }
 
   step() {
+    this.drawBody();
     this.move();
-    this.drawMonster();
+    this.drawBody();
+    this.drawHealth();
   }
   
   heal() {
