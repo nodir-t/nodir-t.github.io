@@ -31,10 +31,7 @@ const config = {
   ttl: () => 1000 * zeroToTwo.random_norm(),
 
   colors: [
-    "red",
-    "orange",
-    "yellow",
-    "blue",
-    "purple",
+    "white",
+    "black",
   ]
 };

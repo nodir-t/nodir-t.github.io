@@ -55,7 +55,7 @@ class Monster {
       const direction = this.direction + Math.PI * 2 / 360 * maxTurn * (1 - 2 * Math.random());
 
       const loc = {
-        x: Math.max(0, Math.min(maxWidth, 
+        x: Math.max(0, Math.min(maxWidth,
                                 this.loc.x + Math.cos(direction) * this.speed)),
         y: Math.max(0, Math.min(maxHeight,
                                 this.loc.y + Math.sin(direction) * this.speed))
@@ -83,7 +83,7 @@ class Monster {
     const healthRadius = Math.min(this.size - 2, this.size * .9);
     if (healthRadius > 0) {
       this.ctx.beginPath();
-      this.ctx.strokeStyle = "black";
+      this.ctx.strokeStyle = this.team.outline;
       this.ctx.arc(this.loc.x, this.loc.y, healthRadius, 0, 2 * Math.PI);
       this.ctx.stroke();
     }
@@ -99,7 +99,7 @@ class Monster {
   get regenerationInterval() {
     return 1000/this.dna.regeneration;
   }
-  
+
   grow() {
     this.size = Math.min(this.maxSize, this.size + config.regeneration * this.dna.regeneration);
   }

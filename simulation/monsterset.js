@@ -1,6 +1,7 @@
 class Team {
   constructor(color) {
     this.color = color;
+    this.outline = color == "white" ? "black" : "white";
     this.monsters = [];
   }
 }
@@ -8,21 +9,22 @@ class Team {
 class MonsterSet {
   constructor(ctx) {
     this.teams = [];
-    for (const color of config.colors) {
+    // White team starts in the left (black) half, black team in the right (white) half.
+    for (const [i, color] of config.colors.entries()) {
       const team = new Team(color);
       team.monsters.push(new Monster(
-        ctx, 
+        ctx,
         team,
         {
-          x: Math.random() * window.innerWidth,
+          x: (i + Math.random()) * window.innerWidth / 2,
           y: Math.random() * window.innerHeight,
         },
         Math.PI * 2 * (0.5 - Math.random())
       ));
       this.teams.push(team);
-    }    
+    }
   }
-  
+
   step() {
     this.teams.forEach(t => t.monsters.forEach(m => m.step()));
     this.kill();
